@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require('discord.js');
-const { useQueue } = require("discord-player");
-const { YouTubeExtractor } = require("@discord-player/extractor");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -31,7 +30,8 @@ module.exports = {
         try {
             const { track } = await interaction.client.player.play(channel, query, {
                 nodeOptions: {
-                    metadata: interaction.member.voice.channel
+                    metadata: interaction.member.voice.channel,
+                    songId: uuidv4()
                 },
                 fallbackSearchEngine: 'youtube'
             });

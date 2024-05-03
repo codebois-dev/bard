@@ -1,18 +1,19 @@
 require('dotenv').config();
-const express = require("express");
+const express = require('express');
+const { engine } = require('express-handlebars');
 const { v4: uuidv4 } = require('uuid');
 const session = require('express-session');
 const path = require('node:path');
-const lib = require("../utils");
+const lib = require('../utils');
 const fs = require('fs');
 const colors = require('colors');
 const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database(path.join(__dirname, "../db/main.db"));
+const db = new sqlite3.Database(path.join(__dirname, '../db/main.db'));
 const lang = new lib.localisation.language(process.env.LANGUAGE);
 
 module.exports = {
     main: async function(client) {
-        db.run("CREATE TABLE IF NOT EXISTS user_config (user_id VARCHAR(255) NOT NULL, theme_id INT NULL)");
+        db.run('CREATE TABLE IF NOT EXISTS user_config (user_id VARCHAR(255) NOT NULL, theme_id INT NULL)');
 
         const app = express();
         const oauth = new lib.bjorn.Client(process.env.BOT_CLIENT_ID, process.env.CLIENT_SECRET, `${process.env.REDIRECT}/api/auth/redirect`);
@@ -31,6 +32,10 @@ module.exports = {
             saveUninitialized: true,
             cookie: { secure: false }
         }));
+
+        app.engine('handlebars', engine());
+        app.set('view engine', 'handlebars');
+        app.set('views', path.join(__dirname, 'templates'));
 
         try {
             const foldersPath = path.join(__dirname, 'routes');

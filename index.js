@@ -1,3 +1,6 @@
+const colors = require('colors');
+console.log(`${'[BARD]'.red} Bard is now loading...`);
+
 require('dotenv').config()
 const clientId = process.env.BOT_CLIENT_ID;
 const token = process.env.DISCORD_TOKEN
@@ -6,7 +9,6 @@ const path = require('node:path');
 const { Client, Collection, Events, GatewayIntentBits } = require('discord.js');
 const { Player } = require('discord-player');
 const { REST, Routes } = require('discord.js');
-const colors = require('colors');
 
 const lib = require("./utils");
 const dashboard = require("./dashboard");

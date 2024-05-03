@@ -1,4 +1,5 @@
 const { useMainPlayer } = require("discord-player");
+const { v4: uuidv4 } = require("uuid");
 
 module.exports = function (app, client, __dirname, db, lib, lang, oauth) {
     app.post('/api/music/play', async (req, res) => {
@@ -17,7 +18,8 @@ module.exports = function (app, client, __dirname, db, lib, lang, oauth) {
                                 try {
                                     const { track } = await player.play(member.voice.channel, req.body.query, {
                                         nodeOptions: {
-                                            metadata: member.voice.channel
+                                            metadata: member.voice.channel,
+                                            songId: uuidv4()
                                         },
                                         fallbackSearchEngine: 'youtube'
                                     });

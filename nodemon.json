@@ -1,0 +1,8 @@
+{
+    "ignore": [
+        "dashboard/public/*",
+        "dashboard/templates/*",
+        "db/*",
+        "lang/*"
+    ]
+}
